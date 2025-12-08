@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EZOIS Platform · Управление проектами РЗА</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="hero">
+      <div class="container">
+        <p class="eyebrow">EZOIS-Platform · ГОСТ 34.602</p>
+        <h1>Интеграция API приложения РЗА</h1>
+        <p class="subtitle">
+          Корпоративная платформа ЭЗОИС-СПб для управления жизненным циклом
+          шкафов РЗА, подстанций и РУ с соблюдением отраслевых регламентов.
+        </p>
+        <div class="hero-actions">
+          <a href="#section6" class="btn primary">Перейти к управлению проектами</a>
+          <a href="#section2" class="btn ghost">Посмотреть архитектуру</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="section1" class="pue-section">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow">Раздел 1</p>
+            <h2>Цифровая экосистема ЭЗОИС-СПб</h2>
+            <p>
+              Центральная точка доступа к сервисам РЗА: каталог проектов,
+              управление конфигурациями, документация и контроль качества.
+            </p>
+          </div>
+          <div class="section-grid">
+            <article class="card">
+              <h3>Единый доступ</h3>
+              <p>SSO, ролевые модели и цифровые журналы ответственности.</p>
+            </article>
+            <article class="card">
+              <h3>Сертификация</h3>
+              <p>Прозрачность соответствия ПУЭ, ГОСТ 34.601-90 и корпоративным регламентам.</p>
+            </article>
+            <article class="card">
+              <h3>Интеграции</h3>
+              <p>Связь с ERP, BIM и ведомственными системами мониторинга.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="section2" class="pue-section">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow">Раздел 2</p>
+            <h2>Архитектура платформы</h2>
+            <p>Микросервисное ядро, API-слой и адаптеры безопасности.</p>
+          </div>
+          <div class="pue-accordion">
+            <button class="accordion-trigger" data-target="arch-core">Ядро платформы</button>
+            <div class="accordion-panel" id="arch-core">
+              <p>
+                FastAPI, Postgres, брокер событий и слои интеграций обеспечивают
+                высокую доступность и трассируемость операций.
+              </p>
+            </div>
+            <button class="accordion-trigger" data-target="arch-security">Безопасность</button>
+            <div class="accordion-panel" id="arch-security">
+              <p>
+                RBAC, журналы аудита, шифрование трафика и средства аттестации
+                по требованиям энергетической отрасли.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section3" class="pue-section">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow">Раздел 3</p>
+            <h2>Модули РЗА</h2>
+            <p>Объекты, шкафы, конфигуратор уставок и отчетность.</p>
+          </div>
+          <div class="section-grid">
+            <article class="card">
+              <h3>Объекты</h3>
+              <p>Подстанции, КРУ и цепочки питания с привязкой к геоданным.</p>
+            </article>
+            <article class="card">
+              <h3>Шкафы РЗА</h3>
+              <p>Каталог шкафов, спецификация оборудования и версии проектов.</p>
+            </article>
+            <article class="card">
+              <h3>Конфигурации</h3>
+              <p>Управление уставками, проверка правил ПУЭ и стандартов.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="section4" class="pue-section">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow">Раздел 4</p>
+            <h2>Отраслевые регламенты</h2>
+            <p>Соблюдение ГОСТ, ПУЭ и корпоративных стандартов.</p>
+          </div>
+          <div class="compliance-list">
+            <div class="compliance-item">
+              <span>ГОСТ 34.602</span>
+              <p>Методология жизненного цикла автоматизированных систем.</p>
+            </div>
+            <div class="compliance-item">
+              <span>ПУЭ 7 изд.</span>
+              <p>Контроль требований к аппаратуре РЗА и КРУ.</p>
+            </div>
+            <div class="compliance-item">
+              <span>Внутренние стандарты</span>
+              <p>Управление качеством для проектов ЭЗОИС-СПб.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="section5" class="pue-section">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow">Раздел 5</p>
+            <h2>Панель мониторинга</h2>
+            <p>Ключевые показатели проектов РЗА и операционных служб.</p>
+          </div>
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <h3>45</h3>
+              <p>Активных подстанций</p>
+            </article>
+            <article class="metric-card">
+              <h3>128</h3>
+              <p>КРУ и РУ в сопровождении</p>
+            </article>
+            <article class="metric-card">
+              <h3>12</h3>
+              <p>Проектов на внедрении</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="section6" class="pue-section management-section">
+        <div class="container">
+          <div class="section-header">
+            <p class="eyebrow">Section 6</p>
+            <h2>Управление проектами РЗА</h2>
+            <p>
+              Взаимодействие с API Приложения РЗА: просмотр объектов,
+              управление КРУ и создание новых проектов для подстанций
+              ЭЗОИС-СПб.
+            </p>
+          </div>
+
+          <div class="accordion-stack">
+            <article class="accordion-card">
+              <header class="accordion-head">
+                <div>
+                  <p class="eyebrow">6.1</p>
+                  <h3>Список проектов (подстанций)</h3>
+                </div>
+                <button class="accordion-trigger" data-target="panel-substations" aria-expanded="true">
+                  <span class="toggle-label">Свернуть</span>
+                </button>
+              </header>
+              <div class="accordion-panel" id="panel-substations">
+                <p>
+                  Получение списка подстанций через <code>GET /api/objects/substations</code>.
+                  Данные обновляются в реальном времени с привязкой КРУ.
+                </p>
+                <div class="panel-actions">
+                  <button type="button" id="refresh-substations" class="btn ghost">
+                    Обновить список
+                  </button>
+                  <button
+                    type="button"
+                    class="btn primary"
+                    data-scroll-target="#create-substation-form"
+                  >
+                    Добавить подстанцию
+                  </button>
+                </div>
+                <div class="status-line" id="substations-status" aria-live="polite"></div>
+                <div class="table-wrapper">
+                  <table id="substations-table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Класс напряжения</th>
+                        <th>Местоположение</th>
+                        <th>КРУ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td colspan="5" class="placeholder">Данные ещё не загружены.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </article>
+
+            <article class="accordion-card">
+              <header class="accordion-head">
+                <div>
+                  <p class="eyebrow">6.2</p>
+                  <h3>Управление КРУ</h3>
+                </div>
+                <button class="accordion-trigger" data-target="panel-switchgears" aria-expanded="true">
+                  <span class="toggle-label">Свернуть</span>
+                </button>
+              </header>
+              <div class="accordion-panel" id="panel-switchgears">
+                <p>
+                  Список КРУ/РУ с привязкой к подстанциям через
+                  <code>GET /api/objects/switchgears</code>.
+                </p>
+                <div class="panel-actions">
+                  <button type="button" id="refresh-switchgears" class="btn ghost">
+                    Обновить список
+                  </button>
+                  <button
+                    type="button"
+                    class="btn primary"
+                    data-scroll-target="#create-switchgear-form"
+                  >
+                    Добавить КРУ
+                  </button>
+                </div>
+                <div class="status-line" id="switchgears-status" aria-live="polite"></div>
+                <div class="table-wrapper">
+                  <table id="switchgears-table">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Класс напряжения</th>
+                        <th>Подстанция</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td colspan="4" class="placeholder">Данные ещё не загружены.</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </article>
+
+            <article class="accordion-card">
+              <header class="accordion-head">
+                <div>
+                  <p class="eyebrow">6.3</p>
+                  <h3>Создать проект</h3>
+                </div>
+                <button class="accordion-trigger" data-target="panel-create" aria-expanded="true">
+                  <span class="toggle-label">Свернуть</span>
+                </button>
+              </header>
+              <div class="accordion-panel" id="panel-create">
+                <p>
+                  Формы создания объектов и КРУ с использованием
+                  <code>POST /api/objects/substations</code> и
+                  <code>POST /api/objects/switchgears</code>.
+                </p>
+                <div class="form-grid">
+                  <form id="create-substation-form" class="control-card">
+                    <fieldset>
+                      <legend>Новая подстанция</legend>
+                      <label>
+                        Название подстанции
+                        <input type="text" name="name" placeholder="ПС Северная" required />
+                      </label>
+                      <label>
+                        Класс напряжения
+                        <input type="text" name="voltage_level" placeholder="110 кВ" required />
+                      </label>
+                      <label>
+                        Местоположение
+                        <input type="text" name="location" placeholder="Ленинградская область" required />
+                      </label>
+                      <button type="submit" class="btn primary">
+                        Создать подстанцию
+                      </button>
+                      <div class="status-line" id="create-substation-status" aria-live="polite"></div>
+                    </fieldset>
+                  </form>
+
+                  <form id="create-switchgear-form" class="control-card">
+                    <fieldset>
+                      <legend>Новое КРУ</legend>
+                      <label>
+                        Название КРУ
+                        <input type="text" name="name" placeholder="КРУ-10" required />
+                      </label>
+                      <label>
+                        Класс напряжения
+                        <input type="text" name="voltage" placeholder="10 кВ" required />
+                      </label>
+                      <label>
+                        Подстанция
+                        <select name="substation_id" required>
+                          <option value="" disabled selected>Выберите подстанцию</option>
+                        </select>
+                      </label>
+                      <button type="submit" class="btn primary">
+                        Создать КРУ
+                      </button>
+                      <div class="status-line" id="create-switchgear-status" aria-live="polite"></div>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>© 2025 ЭЗОИС-СПб · Приложение РЗА</p>
+        <p>API: https://fa32941f-75f6-471c-a3a8-a5244783ebea-00-3sb8arows0wd3.sisko.replit.dev</p>
+      </div>
+    </footer>
+
+    <script src="script.js" type="module"></script>
+  </body>
+</html>
