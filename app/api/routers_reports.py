@@ -2,15 +2,23 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any, Dict, List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from ..db import get_session
-from ..models import DeviceConfig, RzaDevice, RzaPanel, SettingRevision, Substation, Switchgear
+from ..models import (
+    Bay,
+    DeviceConfig,
+    RzaDevice,
+    RzaPanel,
+    SettingRevision,
+    Substation,
+    Switchgear,
+)
 from ..schemas import SubstationRead
 from .routers_objects import get_substation_or_404
 
@@ -56,7 +64,7 @@ async def report_substation_structure(
 async def report_device_history(
     device_id: int, session: AsyncSession = Depends(get_session)
 ) -> Dict[str, Any]:
-    """Собирает историю конфигураций устройства."""
+    """Собирает историю конфигураций устройства (ТЗ 4.2.4)."""
 
     stmt = (
         select(RzaDevice)
@@ -87,3 +95,125 @@ async def report_device_history(
             }
         )
     return {"device": device.name, "configs": configs}
+
+
+@router.get("/rza-devices")
+async def report_rza_devices(
+    session: AsyncSession = Depends(get_session),
+    vendor: str | None = Query(None, description="Фильтр по производителю"),
+    model: str | None = Query(None, description="Фильтр по модели"),
+    substation_id: int | None = Query(None, description="Фильтр по ПС"),
+    switchgear_id: int | None = Query(None, description="Фильтр по РУ"),
+    bay_id: int | None = Query(None, description="Фильтр по ячейке"),
+    panel_id: int | None = Query(None, description="Фильтр по шкафу"),
+    is_primary: bool | None = Query(None, description="Фильтр по признаку основного"),
+) -> List[Dict[str, Any]]:
+    """Возвращает перечень устройств РЗА с расширенной топологией (ТЗ 4.2.4)."""
+
+    stmt = (
+        select(
+            RzaDevice,
+            RzaPanel.designation.label("panel_designation"),
+            Bay.name.label("bay_name"),
+            Switchgear.name.label("switchgear_name"),
+            Substation.name.label("substation_name"),
+        )
+        .join(RzaPanel, RzaPanel.id == RzaDevice.panel_id)
+        .join(Bay, Bay.id == RzaPanel.bay_id)
+        .join(Switchgear, Switchgear.id == Bay.switchgear_id)
+        .join(Substation, Substation.id == Switchgear.substation_id)
+    )
+    if vendor:
+        stmt = stmt.where(RzaDevice.vendor.ilike(f"%{vendor}%"))
+    if model:
+        stmt = stmt.where(RzaDevice.model.ilike(f"%{model}%"))
+    if substation_id:
+        stmt = stmt.where(Substation.id == substation_id)
+    if switchgear_id:
+        stmt = stmt.where(Switchgear.id == switchgear_id)
+    if bay_id:
+        stmt = stmt.where(Bay.id == bay_id)
+    if panel_id:
+        stmt = stmt.where(RzaPanel.id == panel_id)
+    if is_primary is not None:
+        stmt = stmt.where(RzaDevice.is_primary.is_(is_primary))
+    result = await session.execute(stmt)
+    devices: List[Dict[str, Any]] = []
+    for row in result.fetchall():
+        device: RzaDevice = row[0]
+        devices.append(
+            {
+                "id": device.id,
+                "name": device.name,
+                "vendor": device.vendor,
+                "model": device.model,
+                "firmware_version": device.firmware_version,
+                "is_primary": device.is_primary,
+                "panel_id": device.panel_id,
+                "panel_designation": row.panel_designation,
+                "bay_name": row.bay_name,
+                "switchgear_name": row.switchgear_name,
+                "substation_name": row.substation_name,
+            }
+        )
+    return devices
+
+
+@router.get("/settings-history")
+async def report_settings_history(
+    session: AsyncSession = Depends(get_session),
+    device_id: int | None = Query(None, description="Фильтр по устройству"),
+    config_id: int | None = Query(None, description="Фильтр по конфигурации"),
+    substation_id: int | None = Query(None, description="Фильтр по подстанции"),
+    limit: int = Query(50, ge=1, le=500, description="Максимум записей"),
+) -> List[Dict[str, Any]]:
+    """Возвращает историю уставок с привязкой к объектам (ТЗ 4.1.2, 4.2.4)."""
+
+    stmt = (
+        select(
+            SettingRevision,
+            DeviceConfig.version_tag.label("version_tag"),
+            RzaDevice.name.label("device_name"),
+            RzaPanel.designation.label("panel_designation"),
+            Bay.name.label("bay_name"),
+            Switchgear.name.label("switchgear_name"),
+            Substation.name.label("substation_name"),
+        )
+        .join(DeviceConfig, DeviceConfig.id == SettingRevision.config_id)
+        .join(RzaDevice, RzaDevice.id == DeviceConfig.device_id)
+        .join(RzaPanel, RzaPanel.id == RzaDevice.panel_id)
+        .join(Bay, Bay.id == RzaPanel.bay_id)
+        .join(Switchgear, Switchgear.id == Bay.switchgear_id)
+        .join(Substation, Substation.id == Switchgear.substation_id)
+        .order_by(SettingRevision.created_at.desc())
+        .limit(limit)
+    )
+    if device_id:
+        stmt = stmt.where(RzaDevice.id == device_id)
+    if config_id:
+        stmt = stmt.where(DeviceConfig.id == config_id)
+    if substation_id:
+        stmt = stmt.where(Substation.id == substation_id)
+
+    result = await session.execute(stmt)
+    history: List[Dict[str, Any]] = []
+    for row in result.fetchall():
+        revision: SettingRevision = row[0]
+        history.append(
+            {
+                "revision_id": revision.id,
+                "config_id": revision.config_id,
+                "revision": revision.revision,
+                "is_active": revision.is_active,
+                "effective_from": revision.effective_from,
+                "effective_to": revision.effective_to,
+                "created_at": revision.created_at,
+                "version_tag": row.version_tag,
+                "device_name": row.device_name,
+                "panel_designation": row.panel_designation,
+                "bay_name": row.bay_name,
+                "switchgear_name": row.switchgear_name,
+                "substation_name": row.substation_name,
+            }
+        )
+    return history
