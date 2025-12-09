@@ -9,41 +9,52 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .db import Base, engine
-from .api import routers_objects
 
-# Создание таблиц БД
-Base.metadata.create_all(bind=engine)
+from .api import routers_configs, routers_objects, routers_panels, routers_reports
+from .config import settings
+from .db import init_db
 
 app = FastAPI(
-    title="Приложение РЗА",
-    description="Система автоматизации разработки и сопровождения шкафов РЗА по ГОСТ 34.602",
-    version="0.1.0"
+    title=settings.project_name,
+    description=settings.description,
+    version=settings.version,
 )
 
-# CORS для разработки
+# CORS для разработки и тестирования
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=settings.allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
+@app.on_event("startup")
+async def on_startup() -> None:
+    """Создаёт структуру БД при запуске."""
+    await init_db()
+
+
 # Подключение роутеров
 app.include_router(routers_objects.router)
+app.include_router(routers_panels.router)
+app.include_router(routers_configs.router)
+app.include_router(routers_reports.router)
+
 
 @app.get("/")
-def root():
+async def root() -> dict:
     """Корневой эндпоинт с информацией о приложении."""
     return {
-        "message": "Приложение РЗА для ЭЗОИС-СПб",
-        "version": "0.1.0",
-        "docs": "/docs",
-        "redoc": "/redoc"
+        "message": settings.project_name,
+        "version": settings.version,
+        "docs": settings.docs_url if hasattr(settings, "docs_url") else "/docs",
+        "redoc": settings.redoc_url if hasattr(settings, "redoc_url") else "/redoc",
     }
 
+
 @app.get("/health")
-def health_check():
+async def health_check() -> dict:
     """Проверка работоспособности приложения."""
     return {"status": "ok"}
