@@ -7,6 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIqC9cE54cBruCZ9FKdK5mX3mUkn0U8Ajt3v3C0j0yJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -76,27 +79,64 @@
 
       <section class="section tools-section">
         <div class="tools-grid">
-          <article class="card card--reference" data-modal-target="#referenceModal">
+          <article class="card card--reference">
             <div class="card-pill">Справочник</div>
+            <div class="card-icon">
+              <i class="fa-solid fa-book"></i>
+            </div>
             <h2>referenceModal, СНиП</h2>
-            <p>
-              Быстрый доступ к актуальным СНИП, СП и ГОСТ с фильтрами по типу объекта. Локальный кэш и офлайн режим доступны по подписке ALтехник Pro.
+            <p class="card-description">
+              Центр нормативки ALтехник: подключённые ПУЭ 7, СНиП, ГОСТ, СП с мгновенным поиском и офлайн-кэшем.
             </p>
-            <div class="card-meta">
-              <span>312 документов</span>
-              <span>AV1 · Обновлено 09.12</span>
+            <ul class="card-list">
+              <li>Поиск по разделам ПУЭ 7, СНиП, ГОСТ, СП</li>
+              <li>Закладки и история</li>
+              <li>Актуальные редакции</li>
+              <li>Перекрёстные ссылки</li>
+            </ul>
+            <div class="card-actions">
+              <button class="action-button" data-modal-target="#referenceModal">Открыть справочник</button>
             </div>
           </article>
 
-          <article class="card card--scanner" data-modal-target="#scannerModal">
+          <article class="card card--scanner">
             <div class="card-pill">AI анализ</div>
+            <div class="card-icon">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
             <h2>Сканер знаний</h2>
-            <p>
-              Распознаёт PDF/сканы, извлекает структуру, ищет противоречия и формирует отчёт соответствия требованиям.
+            <p class="card-description">
+              Автоматический анализ комплекта документации с глубокой проверкой схем и спецификаций.
             </p>
-            <div class="card-meta">
-              <span>OCR 99.1%</span>
-              <span>Сценарии 12</span>
+            <ul class="card-list">
+              <li>Загрузка схем (PDF, DWG, PNG, JPG до 50 MB)</li>
+              <li>Спецификация оборудования</li>
+              <li>Пояснения для клиента</li>
+              <li>Экспорт в Excel/PDF</li>
+            </ul>
+            <div class="card-actions">
+              <button class="action-button" data-modal-target="#scannerModal">Загрузить схему</button>
+            </div>
+          </article>
+
+          <article class="card card--assistant">
+            <div class="card-pill">РЗА</div>
+            <div class="card-icon">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+            <h2>AL Помощник в РЗА</h2>
+            <p class="card-description">
+              Интерактивный калькулятор защит: от МТЗ до селективности с доступом к базе стандартов ALтехник.
+            </p>
+            <ul class="card-list">
+              <li>МТЗ, Дифзащита, Дистанционная</li>
+              <li>Токи КЗ</li>
+              <li>Проверка ТТ</li>
+              <li>Селективность</li>
+              <li>База стандартов</li>
+            </ul>
+            <div class="card-actions">
+              <button class="action-button" data-modal-target="#assistantModal">Открыть калькулятор</button>
             </div>
           </article>
         </div>

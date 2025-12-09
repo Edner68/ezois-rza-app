@@ -148,6 +148,29 @@ body {
   max-width: 720px;
 }
 
+.card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: rgba(0, 229, 255, 0.12);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  margin: 18px 0;
+}
+
+.card-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.card-list li + li {
+  margin-top: 6px;
+}
+
 .card-grid {
   display: grid;
   gap: 16px;
