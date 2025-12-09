@@ -373,18 +373,18 @@
         <section class="reference-content">
           <div class="reference-toolbar">
             <div class="toolbar-left">
-              <button type="button" class="chip chip--ghost" id="referenceBookmarkBtn">
+              <button type="button" class="chip chip--ghost" id="referenceBookmarkBtn" data-label="Добавить в закладки">
                 <i class="fa-regular fa-bookmark"></i>
-                Добавить в закладки
+                <span class="chip__label">Добавить в закладки</span>
               </button>
-              <button type="button" class="chip chip--ghost" id="referenceCopyLinkBtn">
+              <button type="button" class="chip chip--ghost" id="referenceCopyLinkBtn" data-label="Скопировать ссылку">
                 <i class="fa-solid fa-link"></i>
-                Скопировать ссылку
+                <span class="chip__label">Скопировать ссылку</span>
               </button>
             </div>
             <div class="toolbar-right">
-              <button type="button" class="chip" data-reference-panel="bookmarks">Закладки</button>
-              <button type="button" class="chip" data-reference-panel="history">История</button>
+              <button type="button" class="chip" data-reference-panel="bookmarks" aria-pressed="true">Закладки</button>
+              <button type="button" class="chip" data-reference-panel="history" aria-pressed="false">История</button>
             </div>
           </div>
 
@@ -393,13 +393,13 @@
           </article>
 
           <div class="reference-panels">
-            <section>
+            <section class="is-active" data-reference-section="bookmarks">
               <header>
                 <h4>Закладки</h4>
               </header>
               <ul id="bookmarkList"></ul>
             </section>
-            <section>
+            <section data-reference-section="history">
               <header>
                 <h4>История</h4>
               </header>

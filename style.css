@@ -420,6 +420,15 @@ body {
   letter-spacing: 0.14em;
 }
 
+.chip__label {
+  letter-spacing: 0.18em;
+}
+
+.chip.is-busy {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
 /* Tech writer */
 .tech-writer-modal {
   display: flex;
@@ -697,6 +706,15 @@ textarea {
   overflow-y: auto;
 }
 
+.reference-nav-empty {
+  margin: 0;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+  color: var(--text-muted);
+  text-align: center;
+}
+
 .reference-nav-item {
   border-radius: 14px;
   padding: 12px 14px;
@@ -784,6 +802,11 @@ textarea {
   border-radius: 18px;
   padding: 16px;
   background: rgba(255, 255, 255, 0.02);
+}
+
+.reference-panels section.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.15);
 }
 
 .reference-panels ul {

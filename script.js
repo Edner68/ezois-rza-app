@@ -45,6 +45,17 @@ const closeRelayProtectionModal = () => {
   if (modal) closeModal(modal);
 };
 
+if (typeof window !== 'undefined') {
+  window.openTechWriterModal = openTechWriterModal;
+  window.closeTechWriterModal = closeTechWriterModal;
+  window.openPueSnipModal = openPueSnipModal;
+  window.closePueSnipModal = closePueSnipModal;
+  window.openScannerModal = openScannerModal;
+  window.closeScannerModal = closeScannerModal;
+  window.openRelayProtectionModal = openRelayProtectionModal;
+  window.closeRelayProtectionModal = closeRelayProtectionModal;
+}
+
 modalTriggers.forEach((trigger) => {
   trigger.addEventListener('click', () => {
     const target = trigger.getAttribute('data-modal-target');
@@ -69,6 +80,19 @@ document.addEventListener('keydown', (event) => {
     });
   }
 });
+
+const setChipFeedback = (button, message) => {
+  if (!button) return;
+  const label = button.querySelector('.chip__label');
+  const original = button.dataset.label;
+  if (!label || !original) return;
+  label.textContent = message;
+  button.classList.add('is-busy');
+  setTimeout(() => {
+    label.textContent = original;
+    button.classList.remove('is-busy');
+  }, 1500);
+};
 
 // --- Tech Writer modal ---
 const writerStageOrder = ['input', 'analysis', 'generation', 'done'];
@@ -441,6 +465,7 @@ const bookmarkList = document.getElementById('bookmarkList');
 const historyList = document.getElementById('historyList');
 const referenceTabButtons = document.querySelectorAll('[data-reference-tab]');
 const referencePanelButtons = document.querySelectorAll('[data-reference-panel]');
+const referencePanelSections = document.querySelectorAll('[data-reference-section]');
 let referenceCurrentTab = 'pue';
 let referenceCurrentId = null;
 const referenceBookmarks = [];
@@ -507,27 +532,35 @@ const referenceMarkup = (entry) => {
 
 const renderReferenceNav = () => {
   if (!referenceNav) return;
-  const dataset = referenceData[referenceCurrentTab];
-  const search = referenceSearchInput ? referenceSearchInput.value.toLowerCase() : '';
+  const dataset = referenceData[referenceCurrentTab] || [];
+  const search = referenceSearchInput ? referenceSearchInput.value.toLowerCase().trim() : '';
   referenceNav.innerHTML = '';
-  dataset
-    .filter((entry) => {
-      if (!search) return true;
-      return (
-        entry.section.toLowerCase().includes(search) ||
-        entry.title.toLowerCase().includes(search) ||
-        entry.chapter.toLowerCase().includes(search)
-      );
-    })
-    .forEach((entry) => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'reference-nav-item';
-      if (entry.id === referenceCurrentId) button.classList.add('is-active');
-      button.innerHTML = `<strong>${entry.section}</strong><span>${entry.title}</span>`;
-      button.addEventListener('click', () => setReferenceActive(entry.id));
-      referenceNav.appendChild(button);
-    });
+  const filtered = dataset.filter((entry) => {
+    if (!search) return true;
+    return (
+      entry.section.toLowerCase().includes(search) ||
+      entry.title.toLowerCase().includes(search) ||
+      entry.chapter.toLowerCase().includes(search)
+    );
+  });
+
+  if (!filtered.length) {
+    const empty = document.createElement('p');
+    empty.className = 'reference-nav-empty';
+    empty.textContent = 'Разделы не найдены';
+    referenceNav.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach((entry) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'reference-nav-item';
+    if (entry.id === referenceCurrentId) button.classList.add('is-active');
+    button.innerHTML = `<strong>${entry.section}</strong><span>${entry.title}</span>`;
+    button.addEventListener('click', () => setReferenceActive(entry.id));
+    referenceNav.appendChild(button);
+  });
 };
 
 const setReferenceActive = (id) => {
@@ -538,9 +571,11 @@ const setReferenceActive = (id) => {
   referenceBody.innerHTML = referenceMarkup(entry);
   renderReferenceNav();
   const timestamp = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-  referenceHistory.unshift({ id: entry.id, title: entry.title, time: timestamp, section: entry.section });
-  if (referenceHistory.length > 6) referenceHistory.pop();
-  renderHistoryList();
+  if (!referenceHistory.length || referenceHistory[0].id !== entry.id) {
+    referenceHistory.unshift({ id: entry.id, title: entry.title, time: timestamp, section: entry.section });
+    if (referenceHistory.length > 6) referenceHistory.pop();
+    renderHistoryList();
+  }
 };
 
 if (referenceSearchInput) {
@@ -568,10 +603,7 @@ if (referenceBookmarkBtn) {
       referenceBookmarks.unshift({ id: entry.id, title: entry.title, section: entry.section });
       if (referenceBookmarks.length > 8) referenceBookmarks.pop();
       renderBookmarkList();
-      referenceBookmarkBtn.textContent = 'Добавлено';
-      setTimeout(() => {
-        referenceBookmarkBtn.textContent = 'Добавить в закладки';
-      }, 1500);
+      setChipFeedback(referenceBookmarkBtn, 'Добавлено');
     }
   });
 }
@@ -582,23 +614,29 @@ if (referenceCopyLinkBtn) {
     url.hash = referenceCurrentId || '';
     try {
       await navigator.clipboard.writeText(url.toString());
-      referenceCopyLinkBtn.textContent = 'Скопировано';
-      setTimeout(() => {
-        referenceCopyLinkBtn.textContent = 'Скопировать ссылку';
-      }, 1500);
+      setChipFeedback(referenceCopyLinkBtn, 'Скопировано');
     } catch (err) {
       console.error('Clipboard error', err);
     }
   });
 }
 
+const activateReferencePanel = (panelName) => {
+  referencePanelSections.forEach((section) => {
+    const isMatch = section.dataset.referenceSection === panelName;
+    section.classList.toggle('is-active', isMatch);
+  });
+};
+
 referencePanelButtons.forEach((button) => {
   button.addEventListener('click', () => {
     const target = button.dataset.referencePanel;
-    const panel = target === 'bookmarks' ? bookmarkList : historyList;
-    if (panel) {
-      panel.parentElement?.scrollIntoView({ behavior: 'smooth' });
-    }
+    referencePanelButtons.forEach((btn) => btn.setAttribute('aria-pressed', btn === button ? 'true' : 'false'));
+    activateReferencePanel(target);
+    const panelSection = Array.from(referencePanelSections).find(
+      (section) => section.dataset.referenceSection === target,
+    );
+    panelSection?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 });
 
@@ -607,6 +645,7 @@ if (referenceNav) {
   setReferenceActive(referenceData[referenceCurrentTab][0]?.id);
   renderBookmarkList();
   renderHistoryList();
+  activateReferencePanel('bookmarks');
 }
 
 // --- Scanner modal ---
