@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALтехник — Техническая платформа</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="brand-mark">
+        <span class="brand-logo">AL</span>
+        <div class="brand-text">
+          <p class="brand-label">ALтехник</p>
+          <p class="brand-tagline">Единая техническая платформа</p>
+        </div>
+      </div>
+      <div class="brand-meta">
+        <span class="meta-pill">Документация · Справочники · Контроль</span>
+        <span class="meta-status">Статус: онлайн</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <section id="tech-assistant" class="section">
+        <header class="section-header">
+          <p class="section-label">#tech-assistant</p>
+          <h1>Технический писатель</h1>
+          <p class="section-description">
+            Модуль ALтехник для подготовки полного цикла эксплуатационной документации: от технических условий до комплекта
+            сертификатов соответствия. Тёмная тема, подчёркнутые акценты и строгая иерархия блоков помогают сосредоточиться на содержании.
+          </p>
+        </header>
+
+        <article class="card card--writer">
+          <div class="card-pill">Документация</div>
+          <h2>Карточка технического писателя</h2>
+          <p class="card-description">
+            Вся логика подготовки документов, шаблоны, чек-листы и архив утверждённых файлов собраны в едином интерфейсе. Раздел поддерживает совместную работу,
+            журналы изменений и автоматическое формирование PDF на основе стандартизированных блоков данных ALтехник.
+          </p>
+
+          <div class="card-grid">
+            <div class="subcard">
+              <span class="subcard-index">01</span>
+              <h3>Технические условия</h3>
+              <p>Редактор ТУ с проверкой на ГОСТ 2.114 и выходом в форматах DOCX/PDF.</p>
+            </div>
+            <div class="subcard">
+              <span class="subcard-index">02</span>
+              <h3>Протоколы испытаний</h3>
+              <p>Чек-листы испытаний, телеметрия и генерация протоколов под подпись.</p>
+            </div>
+            <div class="subcard">
+              <span class="subcard-index">03</span>
+              <h3>Сертификаты соответствия</h3>
+              <p>Связка с реестрами, контроль сроков и оповещения о продлении.</p>
+            </div>
+            <div class="subcard">
+              <span class="subcard-index">04</span>
+              <h3>Комплект документации</h3>
+              <p>Сборка пакета документов, версияция и шифрование архива.</p>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button class="action-button" data-modal-target="#writerModal">Начать работу</button>
+            <span class="action-hint">Открывает рабочий стол технического писателя</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="section tools-section">
+        <div class="tools-grid">
+          <article class="card card--reference" data-modal-target="#referenceModal">
+            <div class="card-pill">Справочник</div>
+            <h2>referenceModal, СНиП</h2>
+            <p>
+              Быстрый доступ к актуальным СНИП, СП и ГОСТ с фильтрами по типу объекта. Локальный кэш и офлайн режим доступны по подписке ALтехник Pro.
+            </p>
+            <div class="card-meta">
+              <span>312 документов</span>
+              <span>AV1 · Обновлено 09.12</span>
+            </div>
+          </article>
+
+          <article class="card card--scanner" data-modal-target="#scannerModal">
+            <div class="card-pill">AI анализ</div>
+            <h2>Сканер знаний</h2>
+            <p>
+              Распознаёт PDF/сканы, извлекает структуру, ищет противоречия и формирует отчёт соответствия требованиям.
+            </p>
+            <div class="card-meta">
+              <span>OCR 99.1%</span>
+              <span>Сценарии 12</span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="writerModal" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal-overlay" data-modal-close></div>
+    <div class="modal-dialog">
+      <header class="modal-header">
+        <h3>Рабочий стол технического писателя</h3>
+        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+      </header>
+      <div class="modal-body">
+        <ul>
+          <li>Заполните паспорт изделия и импортируйте исходные данные из ERP.</li>
+          <li>Выберите шаблон документа и назначьте ответственных.</li>
+          <li>Запустите генерацию комплекта и скачайте подписанный архив.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="referenceModal" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal-overlay" data-modal-close></div>
+    <div class="modal-dialog">
+      <header class="modal-header">
+        <h3>Справочник СНиП</h3>
+        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+      </header>
+      <div class="modal-body">
+        <p>Здесь отображаются карточки СНиП/СП/ГОСТ с быстрым поиском и закладками.</p>
+        <button class="action-button action-button--ghost">Открыть полный каталог</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="scannerModal" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal-overlay" data-modal-close></div>
+    <div class="modal-dialog">
+      <header class="modal-header">
+        <h3>Сканер знаний</h3>
+        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+      </header>
+      <div class="modal-body">
+        <p>Загрузите документ, укажите стандарт сравнения и получите отчёт несоответствий.</p>
+        <button class="action-button action-button--ghost">Загрузить документ</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
