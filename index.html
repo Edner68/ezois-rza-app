@@ -101,6 +101,86 @@
           </article>
         </div>
       </section>
+
+      <section id="snip" class="section section--detail">
+        <header class="section-header">
+          <p class="section-label">/ snip</p>
+          <h2>СНИП · Единый справочник</h2>
+          <p class="section-description">
+            Каталог нормативов с многоуровневым поиском, быстрыми фильтрами по регионам и типам объектов, а также ночным режимом чтения.
+            ALтехник ведёт версионность документов и сохраняет рабочие подборки для каждой команды.
+          </p>
+        </header>
+        <div class="section-grid">
+          <article class="stat-card">
+            <p class="stat-label">Документов в доступе</p>
+            <p class="stat-value">312</p>
+            <span class="stat-meta">Обновлено 09.12 · AV1</span>
+          </article>
+          <ul class="feature-list">
+            <li>Быстрый просмотр с подсветкой изменённых пунктов</li>
+            <li>Кросс-ссылки на ГОСТ/СП и примечания инженеров</li>
+            <li>Экспорт подборки в DOCX/PDF одним кликом</li>
+          </ul>
+          <div class="cta-block">
+            <button class="action-button" data-modal-target="#referenceModal">Открыть справочник</button>
+            <span class="action-hint">Доступно офлайн в ALтехник Pro</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="knowledge-scanner" class="section section--detail">
+        <header class="section-header">
+          <p class="section-label">/ knowledge</p>
+          <h2>Сканер знаний</h2>
+          <p class="section-description">
+            Аналитический контур для проверки комплектов РЗА: извлекает структуру из PDF и сканов, сопоставляет с требованиями,
+            строит тепловые карты рисков и рекомендует корректировки.
+          </p>
+        </header>
+        <div class="section-grid">
+          <article class="stat-card">
+            <p class="stat-label">Точность OCR</p>
+            <p class="stat-value">99.1%</p>
+            <span class="stat-meta">12 сценариев анализа · GPU-очередь</span>
+          </article>
+          <ul class="feature-list">
+            <li>Идентификация противоречий между документами</li>
+            <li>Выделение незаполненных блоков и устаревших ссылок</li>
+            <li>Формирование отчёта соответствия с рекомендациями</li>
+          </ul>
+          <div class="cta-block">
+            <button class="action-button" data-modal-target="#scannerModal">Запустить сканер</button>
+            <span class="action-hint">Поддерживается пакетная обработка</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="al-assistant" class="section section--detail">
+        <header class="section-header">
+          <p class="section-label">/ rza-assistant</p>
+          <h2>AL помощник в РЗА</h2>
+          <p class="section-description">
+            Интеллектуальный ассистент для проектировщиков РЗА: синхронизирует данные шкафов, подсказывает уставки, отслеживает статусы FAT/SAT и формирует уведомления.
+          </p>
+        </header>
+        <div class="section-grid">
+          <article class="stat-card">
+            <p class="stat-label">Активные проекты</p>
+            <p class="stat-value">47</p>
+            <span class="stat-meta">Интеграция: SCADA, ERP, DMS</span>
+          </article>
+          <ul class="feature-list">
+            <li>Чат с контекстом объекта и историей изменений</li>
+            <li>Автоматический контроль статусов FAT/SAT</li>
+            <li>Конструктор отчётов по ГОСТ 34.602</li>
+          </ul>
+          <div class="cta-block">
+            <button class="action-button" data-modal-target="#assistantModal">AL помощник</button>
+            <span class="action-hint">Работает в режиме 24/7</span>
+          </div>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -145,6 +225,24 @@
       <div class="modal-body">
         <p>Загрузите документ, укажите стандарт сравнения и получите отчёт несоответствий.</p>
         <button class="action-button action-button--ghost">Загрузить документ</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="assistantModal" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal-overlay" data-modal-close></div>
+    <div class="modal-dialog">
+      <header class="modal-header">
+        <h3>AL помощник в РЗА</h3>
+        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+      </header>
+      <div class="modal-body">
+        <ol>
+          <li>Выберите проект или шкаф РЗА, чтобы ассистент подтянул контекст.</li>
+          <li>Задайте вопрос по уставкам, статусам испытаний или документации.</li>
+          <li>Получите рекомендации, ссылки на нормативы и готовые шаблоны писем.</li>
+        </ol>
+        <button class="action-button action-button--ghost">Запросить консультацию</button>
       </div>
     </div>
   </div>
