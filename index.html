@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ALтехник — Техническая платформа</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIqC9cE54cBruCZ9FKdK5mX3mUkn0U8Ajt3v3C0j0yJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <div class="brand-mark">
+        <span class="brand-logo">AL</span>
+        <div class="brand-text">
+          <p class="brand-label">ALтехник</p>
+          <p class="brand-tagline">Единая техническая платформа</p>
+        </div>
+      </div>
+      <div class="brand-meta">
+        <span class="meta-pill">Документация · Справочники · Контроль</span>
+        <span class="meta-status">Статус: онлайн</span>
+      </div>
+    </header>
+
+    <main class="content">
+      <section id="tech-assistant" class="section">
+        <header class="section-header">
+          <p class="section-label">#tech-assistant</p>
+          <h1>Технический писатель</h1>
+          <p class="section-description">
+            Модуль ALтехник для подготовки полного цикла эксплуатационной документации: от технических условий до комплекта
+            сертификатов соответствия. Тёмная тема, подчёркнутые акценты и строгая иерархия блоков помогают сосредоточиться на содержании.
+          </p>
+        </header>
+
+        <article class="card card--writer">
+          <div class="card-pill">Документация</div>
+          <h2>Карточка технического писателя</h2>
+          <p class="card-description">
+            Вся логика подготовки документов, шаблоны, чек-листы и архив утверждённых файлов собраны в едином интерфейсе. Раздел поддерживает совместную работу,
+            журналы изменений и автоматическое формирование PDF на основе стандартизированных блоков данных ALтехник.
+          </p>
+
+          <div class="card-grid">
+            <div class="subcard">
+              <span class="subcard-index">01</span>
+              <h3>Технические условия</h3>
+              <p>Редактор ТУ с проверкой на ГОСТ 2.114 и выходом в форматах DOCX/PDF.</p>
+            </div>
+            <div class="subcard">
+              <span class="subcard-index">02</span>
+              <h3>Протоколы испытаний</h3>
+              <p>Чек-листы испытаний, телеметрия и генерация протоколов под подпись.</p>
+            </div>
+            <div class="subcard">
+              <span class="subcard-index">03</span>
+              <h3>Сертификаты соответствия</h3>
+              <p>Связка с реестрами, контроль сроков и оповещения о продлении.</p>
+            </div>
+            <div class="subcard">
+              <span class="subcard-index">04</span>
+              <h3>Комплект документации</h3>
+              <p>Сборка пакета документов, версияция и шифрование архива.</p>
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button class="action-button" data-modal-target="#writerModal">Начать работу</button>
+            <span class="action-hint">Открывает рабочий стол технического писателя</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="section tools-section">
+        <div class="tools-grid">
+          <article class="card card--reference">
+            <div class="card-pill">Справочник</div>
+            <div class="card-icon">
+              <i class="fa-solid fa-book"></i>
+            </div>
+            <h2>referenceModal, СНиП</h2>
+            <p class="card-description">
+              Центр нормативки ALтехник: подключённые ПУЭ 7, СНиП, ГОСТ, СП с мгновенным поиском и офлайн-кэшем.
+            </p>
+            <ul class="card-list">
+              <li>Поиск по разделам ПУЭ 7, СНиП, ГОСТ, СП</li>
+              <li>Закладки и история</li>
+              <li>Актуальные редакции</li>
+              <li>Перекрёстные ссылки</li>
+            </ul>
+            <div class="card-actions">
+              <button class="action-button" data-modal-target="#referenceModal">Открыть справочник</button>
+            </div>
+          </article>
+
+          <article class="card card--scanner">
+            <div class="card-pill">AI анализ</div>
+            <div class="card-icon">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <h2>Сканер знаний</h2>
+            <p class="card-description">
+              Автоматический анализ комплекта документации с глубокой проверкой схем и спецификаций.
+            </p>
+            <ul class="card-list">
+              <li>Загрузка схем (PDF, DWG, PNG, JPG до 50 MB)</li>
+              <li>Спецификация оборудования</li>
+              <li>Пояснения для клиента</li>
+              <li>Экспорт в Excel/PDF</li>
+            </ul>
+            <div class="card-actions">
+              <button class="action-button" data-modal-target="#scannerModal">Загрузить схему</button>
+            </div>
+          </article>
+
+          <article class="card card--assistant">
+            <div class="card-pill">РЗА</div>
+            <div class="card-icon">
+              <i class="fa-solid fa-calculator"></i>
+            </div>
+            <h2>AL Помощник в РЗА</h2>
+            <p class="card-description">
+              Интерактивный калькулятор защит: от МТЗ до селективности с доступом к базе стандартов ALтехник.
+            </p>
+            <ul class="card-list">
+              <li>МТЗ, Дифзащита, Дистанционная</li>
+              <li>Токи КЗ</li>
+              <li>Проверка ТТ</li>
+              <li>Селективность</li>
+              <li>База стандартов</li>
+            </ul>
+            <div class="card-actions">
+              <button class="action-button" data-modal-target="#assistantModal">Открыть калькулятор</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="snip" class="section section--detail">
+        <header class="section-header">
+          <p class="section-label">/ snip</p>
+          <h2>СНИП · Единый справочник</h2>
+          <p class="section-description">
+            Каталог нормативов с многоуровневым поиском, быстрыми фильтрами по регионам и типам объектов, а также ночным режимом чтения.
+            ALтехник ведёт версионность документов и сохраняет рабочие подборки для каждой команды.
+          </p>
+        </header>
+        <div class="section-grid">
+          <article class="stat-card">
+            <p class="stat-label">Документов в доступе</p>
+            <p class="stat-value">312</p>
+            <span class="stat-meta">Обновлено 09.12 · AV1</span>
+          </article>
+          <ul class="feature-list">
+            <li>Быстрый просмотр с подсветкой изменённых пунктов</li>
+            <li>Кросс-ссылки на ГОСТ/СП и примечания инженеров</li>
+            <li>Экспорт подборки в DOCX/PDF одним кликом</li>
+          </ul>
+          <div class="cta-block">
+            <button class="action-button" data-modal-target="#referenceModal">Открыть справочник</button>
+            <span class="action-hint">Доступно офлайн в ALтехник Pro</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="knowledge-scanner" class="section section--detail">
+        <header class="section-header">
+          <p class="section-label">/ knowledge</p>
+          <h2>Сканер знаний</h2>
+          <p class="section-description">
+            Аналитический контур для проверки комплектов РЗА: извлекает структуру из PDF и сканов, сопоставляет с требованиями,
+            строит тепловые карты рисков и рекомендует корректировки.
+          </p>
+        </header>
+        <div class="section-grid">
+          <article class="stat-card">
+            <p class="stat-label">Точность OCR</p>
+            <p class="stat-value">99.1%</p>
+            <span class="stat-meta">12 сценариев анализа · GPU-очередь</span>
+          </article>
+          <ul class="feature-list">
+            <li>Идентификация противоречий между документами</li>
+            <li>Выделение незаполненных блоков и устаревших ссылок</li>
+            <li>Формирование отчёта соответствия с рекомендациями</li>
+          </ul>
+          <div class="cta-block">
+            <button class="action-button" data-modal-target="#scannerModal">Запустить сканер</button>
+            <span class="action-hint">Поддерживается пакетная обработка</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="al-assistant" class="section section--detail">
+        <header class="section-header">
+          <p class="section-label">/ rza-assistant</p>
+          <h2>AL помощник в РЗА</h2>
+          <p class="section-description">
+            Интеллектуальный ассистент для проектировщиков РЗА: синхронизирует данные шкафов, подсказывает уставки, отслеживает статусы FAT/SAT и формирует уведомления.
+          </p>
+        </header>
+        <div class="section-grid">
+          <article class="stat-card">
+            <p class="stat-label">Активные проекты</p>
+            <p class="stat-value">47</p>
+            <span class="stat-meta">Интеграция: SCADA, ERP, DMS</span>
+          </article>
+          <ul class="feature-list">
+            <li>Чат с контекстом объекта и историей изменений</li>
+            <li>Автоматический контроль статусов FAT/SAT</li>
+            <li>Конструктор отчётов по ГОСТ 34.602</li>
+          </ul>
+          <div class="cta-block">
+            <button class="action-button" data-modal-target="#assistantModal">AL помощник</button>
+            <span class="action-hint">Работает в режиме 24/7</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="writerModal" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal-overlay" data-modal-close></div>
+    <div class="modal-dialog">
+      <header class="modal-header">
+        <h3>Рабочий стол технического писателя</h3>
+        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+      </header>
+      <div class="modal-body">
+        <ul>
+          <li>Заполните паспорт изделия и импортируйте исходные данные из ERP.</li>
+          <li>Выберите шаблон документа и назначьте ответственных.</li>
+          <li>Запустите генерацию комплекта и скачайте подписанный архив.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="referenceModal" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal-overlay" data-modal-close></div>
+    <div class="modal-dialog">
+      <header class="modal-header">
+        <h3>Справочник СНиП</h3>
+        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+      </header>
+      <div class="modal-body">
+        <p>Здесь отображаются карточки СНиП/СП/ГОСТ с быстрым поиском и закладками.</p>
+        <button class="action-button action-button--ghost">Открыть полный каталог</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="scannerModal" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal-overlay" data-modal-close></div>
+    <div class="modal-dialog">
+      <header class="modal-header">
+        <h3>Сканер знаний</h3>
+        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+      </header>
+      <div class="modal-body">
+        <p>Загрузите документ, укажите стандарт сравнения и получите отчёт несоответствий.</p>
+        <button class="action-button action-button--ghost">Загрузить документ</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="assistantModal" aria-hidden="true" role="dialog" aria-modal="false">
+    <div class="modal-overlay" data-modal-close></div>
+    <div class="modal-dialog">
+      <header class="modal-header">
+        <h3>AL помощник в РЗА</h3>
+        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+      </header>
+      <div class="modal-body">
+        <ol>
+          <li>Выберите проект или шкаф РЗА, чтобы ассистент подтянул контекст.</li>
+          <li>Задайте вопрос по уставкам, статусам испытаний или документации.</li>
+          <li>Получите рекомендации, ссылки на нормативы и готовые шаблоны писем.</li>
+        </ol>
+        <button class="action-button action-button--ghost">Запросить консультацию</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
