@@ -226,64 +226,426 @@
 
   <div class="modal" id="writerModal" aria-hidden="true" role="dialog" aria-modal="false">
     <div class="modal-overlay" data-modal-close></div>
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog--xl tech-writer-modal">
       <header class="modal-header">
-        <h3>Рабочий стол технического писателя</h3>
-        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+        <div>
+          <p class="modal-label">ALтехник · Документация</p>
+          <h3>Рабочий стол технического писателя</h3>
+        </div>
+        <div class="modal-header-actions">
+          <span class="chip chip--pulse">Онлайн</span>
+          <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+        </div>
       </header>
-      <div class="modal-body">
-        <ul>
-          <li>Заполните паспорт изделия и импортируйте исходные данные из ERP.</li>
-          <li>Выберите шаблон документа и назначьте ответственных.</li>
-          <li>Запустите генерацию комплекта и скачайте подписанный архив.</li>
-        </ul>
+
+      <div class="writer-stages" id="writerStages">
+        <div class="stage-card is-active" data-writer-stage="input">
+          <span class="stage-index">01</span>
+          <p>Ввод данных</p>
+        </div>
+        <div class="stage-card" data-writer-stage="analysis">
+          <span class="stage-index">02</span>
+          <p>Анализ и проверка</p>
+        </div>
+        <div class="stage-card" data-writer-stage="generation">
+          <span class="stage-index">03</span>
+          <p>Генерация документов</p>
+        </div>
+        <div class="stage-card" data-writer-stage="done">
+          <span class="stage-index">04</span>
+          <p>Готово</p>
+        </div>
       </div>
+
+      <form id="techWriterForm" class="writer-form">
+        <div class="form-grid">
+          <section class="form-section">
+            <label for="docType">Тип документа</label>
+            <div class="select-wrapper">
+              <select id="docType" name="docType" required>
+                <option value="Технические условия">Технические условия (ГОСТ 2.114)</option>
+                <option value="Протокол испытаний">Протокол испытаний</option>
+                <option value="Сертификат соответствия">Сертификат соответствия</option>
+                <option value="Комплект эксплуатационной документации">Комплект эксплуатационной документации</option>
+              </select>
+            </div>
+
+            <label for="productName">Название изделия</label>
+            <input type="text" id="productName" name="productName" placeholder="Например: ЩО-70 ALтехник" required />
+
+            <label for="productParams">Параметры изделия</label>
+            <textarea id="productParams" name="productParams" rows="4"
+              placeholder="Номинальный ток, степень защиты, климатическое исполнение..." required></textarea>
+
+            <div class="field-pair">
+              <div>
+                <label for="docDeadline">Срок сдачи</label>
+                <input type="date" id="docDeadline" name="docDeadline" required />
+              </div>
+              <div>
+                <label for="docLanguage">Язык документации</label>
+                <div class="select-wrapper">
+                  <select id="docLanguage" name="docLanguage">
+                    <option value="ru">Русский</option>
+                    <option value="en">English</option>
+                    <option value="de">Deutsch</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="form-section">
+            <label for="writerTeam">Команда ALтехник</label>
+            <div class="tag-input">
+              <input type="text" id="writerTeam" name="writerTeam" placeholder="Инициалы исполнителей, запятыми" />
+              <span class="tag-hint">Видят уведомления в AL Cloud</span>
+            </div>
+
+            <label>Исходные файлы</label>
+            <div class="dropzone" id="techWriterDropzone">
+              <input type="file" id="techWriterFiles" multiple accept=".pdf,.docx,.xlsx,.zip,.csv" />
+              <p>Перетащите файлы сюда или <span>выберите</span></p>
+              <small>Поддерживаются PDF/DOCX/XLSX до 25 MB</small>
+            </div>
+            <ul class="file-list" id="techWriterFileList"></ul>
+
+            <label for="writerNotes">Особые условия</label>
+            <textarea id="writerNotes" name="writerNotes" rows="3"
+              placeholder="Ссылки на ГОСТ/ТРТС, требования заказчика, подписи..."></textarea>
+          </section>
+        </div>
+
+        <footer class="form-footer">
+          <div class="form-footer-controls">
+            <label class="checkbox">
+              <input type="checkbox" name="needsApproval" checked />
+              <span>Отправить на юридическое согласование</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="zipArchive" checked />
+              <span>Сформировать шифрованный архив</span>
+            </label>
+          </div>
+          <button type="submit" class="action-button">Запустить генерацию</button>
+        </footer>
+      </form>
+
+      <section class="writer-console">
+        <header>
+          <h4>Журнал генерации</h4>
+          <span id="writerTimer">00:00</span>
+        </header>
+        <ul id="techWriterLog">
+          <li>Сессия ALтехник инициализирована</li>
+        </ul>
+      </section>
     </div>
   </div>
 
   <div class="modal" id="referenceModal" aria-hidden="true" role="dialog" aria-modal="false">
     <div class="modal-overlay" data-modal-close></div>
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog--xxl reference-modal">
       <header class="modal-header">
-        <h3>Справочник СНиП</h3>
-        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+        <div>
+          <p class="modal-label">ALтехник · Нормативная база</p>
+          <h3>Справочник ПУЭ / СНиП</h3>
+        </div>
+        <div class="modal-header-actions">
+          <div class="tab-switch" role="tablist">
+            <button type="button" class="tab-switch__btn is-active" data-reference-tab="pue">ПУЭ 7</button>
+            <button type="button" class="tab-switch__btn" data-reference-tab="snip">СНиП / СП</button>
+          </div>
+          <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+        </div>
       </header>
-      <div class="modal-body">
-        <p>Здесь отображаются карточки СНиП/СП/ГОСТ с быстрым поиском и закладками.</p>
-        <button class="action-button action-button--ghost">Открыть полный каталог</button>
+
+      <div class="reference-layout">
+        <aside class="reference-nav">
+          <label for="referenceSearch" class="sr-only">Поиск по разделам</label>
+          <div class="reference-search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" id="referenceSearch" placeholder="Поиск по разделам, пунктам, ключевым словам" />
+          </div>
+          <nav id="referenceNav" class="reference-nav-list" aria-label="Разделы"></nav>
+        </aside>
+
+        <section class="reference-content">
+          <div class="reference-toolbar">
+            <div class="toolbar-left">
+              <button type="button" class="chip chip--ghost" id="referenceBookmarkBtn">
+                <i class="fa-regular fa-bookmark"></i>
+                Добавить в закладки
+              </button>
+              <button type="button" class="chip chip--ghost" id="referenceCopyLinkBtn">
+                <i class="fa-solid fa-link"></i>
+                Скопировать ссылку
+              </button>
+            </div>
+            <div class="toolbar-right">
+              <button type="button" class="chip" data-reference-panel="bookmarks">Закладки</button>
+              <button type="button" class="chip" data-reference-panel="history">История</button>
+            </div>
+          </div>
+
+          <article id="referenceBody" class="reference-body">
+            <p>Выберите раздел ПУЭ или СНиП, чтобы увидеть содержимое.</p>
+          </article>
+
+          <div class="reference-panels">
+            <section>
+              <header>
+                <h4>Закладки</h4>
+              </header>
+              <ul id="bookmarkList"></ul>
+            </section>
+            <section>
+              <header>
+                <h4>История</h4>
+              </header>
+              <ul id="historyList"></ul>
+            </section>
+          </div>
+        </section>
       </div>
     </div>
   </div>
 
   <div class="modal" id="scannerModal" aria-hidden="true" role="dialog" aria-modal="false">
     <div class="modal-overlay" data-modal-close></div>
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog--xl scanner-modal">
       <header class="modal-header">
-        <h3>Сканер знаний</h3>
+        <div>
+          <p class="modal-label">ALтехник · AI анализ</p>
+          <h3>Сканер знаний</h3>
+        </div>
         <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
       </header>
-      <div class="modal-body">
-        <p>Загрузите документ, укажите стандарт сравнения и получите отчёт несоответствий.</p>
-        <button class="action-button action-button--ghost">Загрузить документ</button>
+
+      <div class="scanner-grid">
+        <section class="scanner-upload">
+          <h4>Загрузка схем</h4>
+          <p class="scanner-meta">PDF, DWG, PNG, JPG до 50 MB</p>
+          <div class="dropzone" id="scannerDropzone">
+            <input type="file" id="scannerFiles" multiple accept=".pdf,.dwg,.png,.jpg,.jpeg" />
+            <p>Перетащите схемы или <span>выберите</span></p>
+            <small>AI анализирует топологию, наложения и подписи</small>
+          </div>
+          <ul class="file-list" id="scannerFileList"></ul>
+        </section>
+
+        <section class="scanner-actions">
+          <h4>Цели анализа</h4>
+          <div class="option-list">
+            <label class="checkbox">
+              <input type="checkbox" name="scannerOptions" value="spec" checked />
+              <span>Спецификация оборудования</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="scannerOptions" value="client" checked />
+              <span>Пояснения для клиента</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="scannerOptions" value="excel" />
+              <span>Экспорт в Excel</span>
+            </label>
+            <label class="checkbox">
+              <input type="checkbox" name="scannerOptions" value="pdf" />
+              <span>Экспорт в PDF</span>
+            </label>
+          </div>
+          <div class="scanner-buttons">
+            <button type="button" class="action-button" data-scanner-action="spec">Спецификация оборудования</button>
+            <button type="button" class="action-button action-button--ghost" data-scanner-action="client">Пояснения
+              для клиента</button>
+            <button type="button" class="chip chip--ghost" data-scanner-action="export-xl">Экспорт в Excel</button>
+            <button type="button" class="chip chip--ghost" data-scanner-action="export-pdf">Экспорт в PDF</button>
+          </div>
+        </section>
       </div>
+
+      <section class="scanner-output">
+        <header>
+          <h4>Журнал анализа</h4>
+          <span id="scannerStatus" class="status-dot">Ожидание файлов</span>
+        </header>
+        <ul id="scannerLog">
+          <li>Инициализирован контур анализа ALтехник</li>
+        </ul>
+      </section>
     </div>
   </div>
 
   <div class="modal" id="assistantModal" aria-hidden="true" role="dialog" aria-modal="false">
     <div class="modal-overlay" data-modal-close></div>
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog--xxxl rza-modal">
       <header class="modal-header">
-        <h3>AL помощник в РЗА</h3>
-        <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+        <div>
+          <p class="modal-label">ALтехник · Релейная защита</p>
+          <h3>Калькулятор РЗА</h3>
+        </div>
+        <div class="modal-header-actions">
+          <div class="select-wrapper select-wrapper--tight">
+            <label for="rzaSubstation" class="sr-only">Тип подстанции</label>
+            <select id="rzaSubstation">
+              <option value="kru6">КРУ-6 кВ</option>
+              <option value="kru10">КРУ-10 кВ</option>
+              <option value="kso10">КСО-10 кВ</option>
+            </select>
+          </div>
+          <button class="modal-close" data-modal-close aria-label="Закрыть">×</button>
+        </div>
       </header>
-      <div class="modal-body">
-        <ol>
-          <li>Выберите проект или шкаф РЗА, чтобы ассистент подтянул контекст.</li>
-          <li>Задайте вопрос по уставкам, статусам испытаний или документации.</li>
-          <li>Получите рекомендации, ссылки на нормативы и готовые шаблоны писем.</li>
-        </ol>
-        <button class="action-button action-button--ghost">Запросить консультацию</button>
+
+      <div class="rza-substation" id="rzaSubstationInfo">
+        <p>Выберите вкладку, задайте параметры уставок и получите расчёт.</p>
       </div>
+
+      <div class="rza-tabs" role="tablist">
+        <button type="button" class="tab-switch__btn is-active" data-rza-tab="mtz">МТЗ</button>
+        <button type="button" class="tab-switch__btn" data-rza-tab="dif">Дифзащита</button>
+        <button type="button" class="tab-switch__btn" data-rza-tab="distance">Дистанционная</button>
+        <button type="button" class="tab-switch__btn" data-rza-tab="fault">Токи КЗ</button>
+        <button type="button" class="tab-switch__btn" data-rza-tab="ctcheck">Проверка ТТ</button>
+        <button type="button" class="tab-switch__btn" data-rza-tab="selectivity">Селективность</button>
+        <button type="button" class="tab-switch__btn" data-rza-tab="tznp">ТЗНП</button>
+        <button type="button" class="tab-switch__btn" data-rza-tab="stability">Стойкость</button>
+      </div>
+
+      <div class="rza-panels">
+        <form class="rza-panel is-active" data-rza-panel="mtz">
+          <div class="form-grid form-grid--compact">
+            <label>Номинальный ток, A
+              <input type="number" name="in" min="0" step="0.1" value="630" required />
+            </label>
+            <label>Коэффициент чувствительности
+              <input type="number" name="ks" min="1" step="0.1" value="1.2" required />
+            </label>
+            <label>Время задержки, c
+              <input type="number" name="t" min="0" step="0.01" value="0.3" required />
+            </label>
+          </div>
+          <button type="submit" class="chip chip--filled">Расчёт МТЗ</button>
+        </form>
+
+        <form class="rza-panel" data-rza-panel="dif">
+          <div class="form-grid form-grid--compact">
+            <label>Ток дифференциальный, A
+              <input type="number" name="idiff" min="0" step="0.1" value="250" required />
+            </label>
+            <label>Ток тормозящий, A
+              <input type="number" name="irestr" min="0" step="0.1" value="500" required />
+            </label>
+            <label>Коэффициент торможения
+              <input type="number" name="kh" min="0" step="0.1" value="0.5" required />
+            </label>
+          </div>
+          <button type="submit" class="chip chip--filled">Расчёт ДЗ</button>
+        </form>
+
+        <form class="rza-panel" data-rza-panel="distance">
+          <div class="form-grid form-grid--compact">
+            <label>Сопротивление линии, Ом
+              <input type="number" name="zl" min="0" step="0.01" value="3.8" required />
+            </label>
+            <label>Напряжение, кВ
+              <input type="number" name="u" min="0" step="0.1" value="10" required />
+            </label>
+            <label>Длина линии, км
+              <input type="number" name="length" min="0" step="0.1" value="12" required />
+            </label>
+          </div>
+          <button type="submit" class="chip chip--filled">Расчёт ДЗ</button>
+        </form>
+
+        <form class="rza-panel" data-rza-panel="fault">
+          <div class="form-grid form-grid--compact">
+            <label>Мощность КЗ, МВА
+              <input type="number" name="skz" min="0" step="1" value="350" required />
+            </label>
+            <label>Напряжение, кВ
+              <input type="number" name="u" min="0" step="0.1" value="10" required />
+            </label>
+            <label>Коэффициент реактивности
+              <input type="number" name="xR" min="0" step="0.1" value="0.3" required />
+            </label>
+          </div>
+          <button type="submit" class="chip chip--filled">Расчёт токов КЗ</button>
+        </form>
+
+        <form class="rza-panel" data-rza-panel="ctcheck">
+          <div class="form-grid form-grid--compact">
+            <label>Класс точности ТТ
+              <input type="number" name="class" min="5" step="5" value="10" required />
+            </label>
+            <label>Ток вторичный, A
+              <input type="number" name="isecondary" min="0" step="0.1" value="5" required />
+            </label>
+            <label>Нагрузка цепи, Ом
+              <input type="number" name="burden" min="0" step="0.01" value="1.5" required />
+            </label>
+          </div>
+          <button type="submit" class="chip chip--filled">Проверка ТТ</button>
+        </form>
+
+        <form class="rza-panel" data-rza-panel="selectivity">
+          <div class="form-grid form-grid--compact">
+            <label>Ток предыдущей ступени, A
+              <input type="number" name="iprev" min="0" step="0.1" value="400" required />
+            </label>
+            <label>Коэффициент селективности
+              <input type="number" name="ks" min="1" step="0.05" value="1.3" required />
+            </label>
+            <label>Запас по времени, c
+              <input type="number" name="dt" min="0" step="0.01" value="0.2" required />
+            </label>
+          </div>
+          <button type="submit" class="chip chip--filled">Проверка селективности</button>
+        </form>
+
+        <form class="rza-panel" data-rza-panel="tznp">
+          <div class="form-grid form-grid--compact">
+            <label>Ток замыкания на землю, A
+              <input type="number" name="ig" min="0" step="0.1" value="12" required />
+            </label>
+            <label>Резистор ступени, Ом
+              <input type="number" name="rz" min="0" step="0.1" value="50" required />
+            </label>
+            <label>Таймер ТЗНП, c
+              <input type="number" name="t" min="0" step="0.01" value="0.15" required />
+            </label>
+          </div>
+          <button type="submit" class="chip chip--filled">Расчёт ТЗНП</button>
+        </form>
+
+        <form class="rza-panel" data-rza-panel="stability">
+          <div class="form-grid form-grid--compact">
+            <label>Инерционность привода, c
+              <input type="number" name="inertia" min="0" step="0.01" value="0.05" required />
+            </label>
+            <label>Макс. ток качаний, A
+              <input type="number" name="iosc" min="0" step="0.1" value="800" required />
+            </label>
+            <label>Коэффициент устойчивости
+              <input type="number" name="ks" min="1" step="0.1" value="1.4" required />
+            </label>
+          </div>
+          <button type="submit" class="chip chip--filled">Проверить стойкость</button>
+        </form>
+      </div>
+
+      <section class="rza-results">
+        <header>
+          <h4>Результаты расчёта</h4>
+          <div class="rza-exports">
+            <button type="button" class="chip chip--ghost" data-rza-export="pdf">Экспорт PDF</button>
+            <button type="button" class="chip chip--ghost" data-rza-export="excel">Экспорт Excel</button>
+          </div>
+        </header>
+        <div id="rzaResults">
+          <p>Расчёты появятся после заполнения любой вкладки.</p>
+        </div>
+      </section>
     </div>
   </div>
 
